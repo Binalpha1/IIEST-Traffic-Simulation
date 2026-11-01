@@ -540,7 +540,7 @@ function updateSignalDisplay() {
 
 // ---------- BACKEND CONNECTION ----------
 
-const API_URL = "http://localhost:3000/api/traffic";
+const API_URL = "https://iiest-traffic-simulation.onrender.com/api/traffic";
 
 let lastSentTrafficData = "";
 
