@@ -1,0 +1,116 @@
+
+/* BOLD & PROFESSIONAL DASHBOARD THEME */
+
+body {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    background: #eaf0f8;
+    color: #0f172a;
+}
+
+header {
+    background: linear-gradient(135deg, #07152e, #123d75);
+    padding: 30px 24px;
+    border-bottom: 5px solid #38bdf8;
+}
+
+header h1 {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+
+header p {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.card {
+    border: 2px solid #d5dfed;
+    border-radius: 16px;
+    padding: 23px;
+    box-shadow: 0 8px 22px #10213a16;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px #10213a25;
+}
+
+.card h3 {
+    color: #334155;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.value {
+    font-size: clamp(30px, 4vw, 40px);
+    font-weight: 900;
+    color: #123d75;
+    letter-spacing: -1px;
+}
+
+.panel {
+    border: 2px solid #dbe4f0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 6px 20px #10213a0d;
+}
+
+.panel h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #10213a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+button {
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 9px;
+    padding: 13px 18px;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.refresh {
+    background: #1d4ed8;
+    color: white;
+    box-shadow: 0 4px 10px #1d4ed833;
+}
+
+.add {
+    background: #15803d;
+    color: white;
+    box-shadow: 0 4px 10px #15803d33;
+}
+
+th {
+    background: #10213a;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+td {
+    font-weight: 600;
+}
+
+.status {
+    font-weight: 800;
+    border: 1px solid #93c5fd;
+}
+
+.notice {
+    font-weight: 600;
+    border-left: 5px solid #f59e0b;
+    line-height: 1.7;
+}

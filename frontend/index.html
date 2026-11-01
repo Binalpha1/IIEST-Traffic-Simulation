@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIEST Shibpur Traffic Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Full-screen simulation -->
+    <main id="simulationScreen">
+
+        <div class="simulation-heading">
+            <h1>IIEST Shibpur Traffic Simulation</h1>
+            <p>First Gate • Live Traffic Visualization</p>
+        </div>
+
+        <div id="simulationArea">
+
+            <div class="road road-horizontal"></div>
+            <div class="road road-vertical"></div>
+
+            <div class="gate">COLLEGE GATE</div>
+
+            <div class="college-campus">
+                <h3>IIEST SHIBPUR CAMPUS</h3>
+            </div>
+
+            <div id="parkingArea" class="parkingArea">
+                <h3>Parking Area</h3>
+
+                <div class="parking-slots">
+                    <div id="slot1" class="parking-slot">Slot 1</div>
+                    <div id="slot2" class="parking-slot">Slot 2</div>
+                    <div id="slot3" class="parking-slot">Slot 3</div>
+                    <div id="slot4" class="parking-slot">Slot 4</div>
+                    <div id="slot5" class="parking-slot">Slot 5</div>
+                    <div id="slot6" class="parking-slot">Slot 6</div>
+                </div>
+            </div>
+
+            <div id="signalLight" class="signal-light">
+                <span class="red active"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+            </div>
+
+            <div id="signalText">Signal: RED</div>
+
+        </div>
+
+        <!-- Single button for all dashboard controls -->
+        <button id="menuToggleBtn"
+                class="menu-toggle"
+                aria-expanded="false"
+                aria-controls="controlPanel">
+            ☰ Open Dashboard
+        </button>
+
+        <!-- All controls and activities hidden inside this panel -->
+        <aside id="controlPanel" class="control-panel" hidden>
+
+            <div class="panel-header">
+                <h2>Traffic Dashboard</h2>
+                <button id="closeMenuBtn" class="close-btn">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Live statistics -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h3>Inside Campus</h3>
+                    <p id="insideCount">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Outside / Waiting</h3>
+                    <p id="outsideCount">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Waiting Vehicles</h3>
+                    <p id="waitingCount">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Parked Vehicles</h3>
+                    <p id="parkingCount">0</p>
+                </div>
+            </section>
+
+            <!-- Simulation controls -->
+            <section class="panel-section">
+                <h3>Simulation Controls</h3>
+
+                <div class="controls">
+                    <button id="startBtn">▶ Start</button>
+                    <button id="pauseBtn">⏸ Pause</button>
+                    <button id="resetBtn">↻ Reset</button>
+                    <button id="addCarBtn">+ Add Car</button>
+                    <button id="addBusBtn">+ Add Bus</button>
+                    <button id="addPedestrianBtn">+ Add Pedestrian</button>
+                </div>
+            </section>
+
+            <!-- Traffic information -->
+            <section class="panel-section">
+                <h3>Traffic Information</h3>
+
+                <p>
+                    Signal Status:
+                    <span id="statusLight"></span>
+                    <strong id="trafficStatus">RED</strong>
+                </p>
+
+                <p>Total Cars: <strong id="totalCars">0</strong></p>
+                <p>Total Buses: <strong id="totalBuses">0</strong></p>
+                <p>Pedestrians: <strong id="totalPedestrians">0</strong></p>
+                <p>Occupied Slots: <strong id="occupiedSlots">0</strong></p>
+            </section>
+
+            <!-- Activity log -->
+            <section class="panel-section">
+                <h3>Activity Log</h3>
+                <ul id="activityList"></ul>
+            </section>
+
+            <!-- Report button -->
+            <section class="panel-section">
+                <button id="reportToggleBtn"
+                        class="report-btn"
+                        aria-expanded="false"
+                        aria-controls="secureReport">
+                    View Secure Report
+                </button>
+
+                <div id="secureReport" hidden>
+                    <h2>Traffic Report</h2>
+                    <p>Simulation report for today</p>
+
+                    <div class="report-grid">
+                        <div class="report-item">
+                            <h3>Total Vehicles Today</h3>
+                            <p id="totalVehiclesToday">0</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Waiting Vehicles</h3>
+                            <p id="reportWaiting">0</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Entered Today</h3>
+                            <p id="enteredToday">0</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Parked Now</h3>
+                            <p id="parkedNow">0</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Exited Today</h3>
+                            <p id="exitedToday">0</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Average Waiting Time</h3>
+                            <p id="averageWaitingTime">0 sec</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Free Parking Slots</h3>
+                            <p id="freeParkingSlots">6</p>
+                        </div>
+
+                        <div class="report-item">
+                            <h3>Number Plate Count</h3>
+                            <p id="numberPlateCount">0</p>
+                        </div>
+                    </div>
+
+                    <h3>Vehicle Number Plates</h3>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Number Plate</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="numberPlateTable"></tbody>
+                        </table>
+                    </div>
+
+                    <button id="exportReportBtn" class="export-btn">
+                        Export Report
+                    </button>
+                </div>
+            </section>
+
+        </aside>
+
+    </main>
+
+</body>
+</html>

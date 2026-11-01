@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IIEST Gate Traffic Dashboard</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+header {
+    background: #10213a;
+    color: white;
+    padding: 22px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 25px;
+}
+
+header p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.notice {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #0000000b;
+    border: 1px solid #e2e8f0;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.value {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 14px;
+}
+
+.panel {
+    background: white;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 19px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 11px 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.refresh {
+    background: #2563eb;
+    color: white;
+}
+
+.add {
+    background: #15803d;
+    color: white;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    margin: 4px;
+    max-width: 100%;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #f8fafc;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 20px;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    padding: 25px;
+}
+
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    main {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .value {
+        font-size: 27px;
+    }
+}
+
+@media (max-width: 360px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== FUTURISTIC TRAFFIC COMMAND CENTER ===== */
+
+:root {
+    --bg: #050b18;
+    --panel: #0b1629;
+    --cyan: #00f5ff;
+    --blue: #387bff;
+    --green: #00ffa3;
+    --purple: #a855f7;
+    --text: #e6f7ff;
+    --muted: #91a7c4;
+    --border: rgba(0, 245, 255, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top, #102a4c 0%, transparent 50%),
+        linear-gradient(135deg, #030712, #071426 65%, #090b20);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: 600;
+    min-height: 100vh;
+}
+
+/* Futuristic header */
+
+header {
+    background: linear-gradient(110deg, #071426, #102b50, #071426);
+    border-bottom: 2px solid var(--cyan);
+    box-shadow: 0 5px 30px #00f5ff20;
+    padding: 28px;
+}
+
+header h1 {
+    color: white;
+    font-size: clamp(25px, 4vw, 36px);
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 18px #00f5ff70;
+}
+
+header p {
+    color: var(--cyan);
+    letter-spacing: 1px;
+}
+
+/* Neon information cards */
+
+.cards {
+    gap: 18px;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #10213a, #071222);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: inset 0 0 20px #00f5ff05,
+                0 8px 25px #00000040;
+    transition: 0.25s ease;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 2px;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 24px #00f5ff22;
+}
+
+.card h3 {
+    color: #a9c4e5;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.value {
+    color: var(--cyan);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 900;
+    text-shadow: 0 0 18px #00f5ff50;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Dashboard panels */
+
+.panel {
+    background: linear-gradient(145deg, #0c192d, #071120);
+    border: 1px solid #1b3c5b;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px #00000030;
+}
+
+.panel h2 {
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #24415e;
+}
+
+#message {
+    color: var(--green);
+    overflow-wrap: anywhere;
+}
+
+/* Futuristic buttons */
+
+button {
+    border-radius: 8px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+}
+
+.refresh {
+    background: #092f49;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    box-shadow: 0 0 12px #00f5ff10;
+}
+
+.refresh:hover {
+    background: #06445b;
+    box-shadow: 0 0 20px #00f5ff35;
+}
+
+.add {
+    background: #073b32;
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+.add:hover {
+    background: #075343;
+    box-shadow: 0 0 20px #00ffa325;
+}
+
+/* Search controls */
+
+input, select {
+    background: #071426;
+    color: white;
+    border: 1px solid #244765;
+    border-radius: 8px;
+    outline: none;
+}
+
+input::placeholder {
+    color: #7188a5;
+}
+
+input:focus, select:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px #00f5ff20;
+}
+
+/* Vehicle table */
+
+.table-wrap {
+    border-radius: 8px;
+}
+
+table {
+    color: #e2f0ff;
+}
+
+th {
+    background: #102844;
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--cyan);
+}
+
+td {
+    border-bottom: 1px solid #1b3048;
+}
+
+tbody tr {
+    transition: background 0.2s;
+}
+
+tbody tr:hover {
+    background: #112742;
+}
+
+.status {
+    background: #0c304b;
+    color: var(--cyan);
+    border: 1px solid #17638a;
+}
+
+/* Demo warning */
+
+.notice {
+    background: #241c12;
+    color: #ffd99a;
+    border: 1px solid #80551c;
+    border-left: 4px solid #ffb547;
+    border-radius: 8px;
+}
+
+/* Footer */
+
+footer {
+    color: #728ba8;
+    letter-spacing: 0.5px;
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition: none !important;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🚦 Gate Traffic Dashboard</h1>
+    <p>IIEST Shibpur — Entry, Exit and Parking Monitor</p>
+</header>
+
+<main>
+
+<div class="notice">
+    <strong>Demo Mode:</strong> Numbers and vehicle records below are
+    sample data, not live gate observations. Real-time tracking requires
+    a connected simulation or authorized vehicle-detection system.
+</div>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Vehicles Today</h3>
+        <div class="value" id="total">128</div>
+    </div>
+
+    <div class="card">
+        <h3>Waiting Vehicles</h3>
+        <div class="value" id="waiting">8</div>
+    </div>
+
+    <div class="card">
+        <h3>Entered Vehicles Today</h3>
+        <div class="value" id="entered">120</div>
+    </div>
+
+    <div class="card">
+        <h3>Parked Vehicles Now</h3>
+        <div class="value" id="parked">42</div>
+    </div>
+
+    <div class="card">
+        <h3>Exited Vehicles Today</h3>
+        <div class="value" id="exited">78</div>
+    </div>
+
+    <div class="card">
+        <h3>Average Waiting Time</h3>
+        <div class="value"><span id="waitingTime">12</span> min</div>
+    </div>
+
+</div>
+
+<section class="panel">
+    <h2>Traffic Controls</h2>
+
+    <div class="actions">
+        <button class="refresh" onclick="loadTrafficData()">
+            ↻ Refresh Backend Data
+        </button>
+
+        <button class="add" onclick="addDemoVehicle()">
+            + Add Demo Vehicle
+        </button>
+    </div>
+
+    <p id="message">Dashboard loaded with sample data.</p>
+</section>
+
+<section class="panel">
+    <h2>Vehicle Number Plate Log</h2>
+
+    <input
+        id="search"
+        type="text"
+        placeholder="Search number plate..."
+        oninput="renderVehicles()"
+    >
+
+    <select id="filter" onchange="renderVehicles()">
+        <option value="All">All Statuses</option>
+        <option value="Waiting">Waiting</option>
+        <option value="Inside">Inside Campus</option>
+        <option value="Parked">Parked</option>
+        <option value="Exited">Exited</option>
+    </select>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Number Plate</th>
+                    <th>Vehicle</th>
+                    <th>Entry Time</th>
+                    <th>Exit Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="vehicleTable"></tbody>
+        </table>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    IIEST Shibpur Traffic Simulation Project · Dashboard Prototype
+</footer>
+
+<script>
+const vehicles = [
+    {
+        plate: "WB-00-XX-0001",
+        type: "Car",
+        entry: "09:10 AM",
+        exit: "-",
+        status: "Parked"
+    },
+    {
+        plate: "WB-00-XX-0002",
+        type: "Motorcycle",
+        entry: "09:15 AM",
+        exit: "-",
+        status: "Waiting"
+    },
+    {
+        plate: "WB-00-XX-0003",
+        type: "Car",
+        entry: "09:20 AM",
+        exit: "-",
+        status: "Inside"
+    },
+    {
+        plate: "WB-00-XX-0004",
+        type: "Van",
+        entry: "08:30 AM",
+        exit: "10:00 AM",
+        status: "Exited"
+    }
+];
+
+function renderVehicles() {
+    const search = document
+        .getElementById("search").value.toLowerCase();
+
+    const filter = document.getElementById("filter").value;
+
+    const filtered = vehicles.filter(vehicle => {
+        const matchesPlate =
+            vehicle.plate.toLowerCase().includes(search);
+
+        const matchesStatus =
+            filter === "All" || vehicle.status === filter;
+
+        return matchesPlate && matchesStatus;
+    });
+
+    document.getElementById("vehicleTable").innerHTML =
+        filtered.map(vehicle => `
+            <tr>
+                <td>${vehicle.plate}</td>
+                <td>${vehicle.type}</td>
+                <td>${vehicle.entry}</td>
+                <td>${vehicle.exit}</td>
+                <td><span class="status">${vehicle.status}</span></td>
+            </tr>
+        `).join("");
+}
+
+async function loadTrafficData() {
+    const message = document.getElementById("message");
+
+    try {
+        const response = await fetch("/api/traffic");
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const data = await response.json();
+
+        if (data.totalVehicles !== undefined) {
+            document.getElementById("total").textContent =
+                data.totalVehicles;
+        }
+
+        if (data.waitingVehicles !== undefined) {
+            document.getElementById("waiting").textContent =
+                data.waitingVehicles;
+        }
+
+        if (data.averageWaitingTime !== undefined) {
+            document.getElementById("waitingTime").textContent =
+                data.averageWaitingTime;
+        }
+
+        if (data.enteredVehicles !== undefined) {
+            document.getElementById("entered").textContent =
+                data.enteredVehicles;
+        }
+
+        if (data.parkedVehicles !== undefined) {
+            document.getElementById("parked").textContent =
+                data.parkedVehicles;
+        }
+
+        if (data.exitedVehicles !== undefined) {
+            document.getElementById("exited").textContent =
+                data.exitedVehicles;
+        }
+
+        message.textContent =
+            "Successfully received available data from backend.";
+
+    } catch (error) {
+        message.textContent =
+            "Backend connection failed. Check that node server.js is running.";
+    }
+}
+
+function addDemoVehicle() {
+    const number = vehicles.length + 1;
+
+    vehicles.unshift({
+        plate: "DEMO-" + String(number).padStart(4, "0"),
+        type: "Demo Car",
+        entry: new Date().toLocaleTimeString(),
+        exit: "-",
+        status: "Waiting"
+    });
+
+    document.getElementById("total").textContent =
+        Number(document.getElementById("total").textContent) + 1;
+
+    document.getElementById("waiting").textContent =
+        Number(document.getElementById("waiting").textContent) + 1;
+
+    renderVehicles();
+
+    document.getElementById("message").textContent =
+        "Demo vehicle added locally. It has not been saved to the backend.";
+}
+
+renderVehicles();
+loadTrafficData();
+</script>
+
+</body>
+</html>
